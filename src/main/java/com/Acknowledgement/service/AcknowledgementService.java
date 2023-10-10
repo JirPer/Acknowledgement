@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,10 +24,6 @@ public class AcknowledgementService {
   @Autowired
   private AcknowledgementRepository acknowledgementRepository;
   private Acknowledgement acknowledgement;
-
-  private final Map<Object, String> nameMap = new HashMap<>();
-  private final Map<Object, Long> payoutMap = new HashMap<>();
-  private final Map<Object, String> dateMap = new HashMap<>();
   private final String sourcePath = "C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig2.docx";
 
   @Transactional
