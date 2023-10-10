@@ -23,7 +23,6 @@ public class AcknowledgementService {
 
   @Autowired
   private AcknowledgementRepository acknowledgementRepository;
-  private Acknowledgement acknowledgement;
   private final String sourcePath = "C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig2.docx";
 
   @Transactional
