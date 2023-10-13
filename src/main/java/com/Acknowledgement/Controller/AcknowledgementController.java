@@ -1,7 +1,7 @@
-package com.Acknowledgement.controller;
+package com.Acknowledgement.Controller;
 
-import com.Acknowledgement.entity.Acknowledgement;
-import com.Acknowledgement.service.AcknowledgementService;
+import com.Acknowledgement.Entity.Acknowledgement;
+import com.Acknowledgement.Service.AcknowledgementService;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
