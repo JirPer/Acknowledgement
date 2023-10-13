@@ -1,4 +1,4 @@
-package com.Acknowledgement.entity;
+package com.Acknowledgement.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

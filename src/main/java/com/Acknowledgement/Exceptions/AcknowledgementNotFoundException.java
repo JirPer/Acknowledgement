@@ -1,4 +1,4 @@
-package com.Acknowledgement.exceptions;
+package com.Acknowledgement.Exceptions;
 
 public class AcknowledgementNotFoundException extends RuntimeException {
 
