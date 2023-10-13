@@ -1,10 +1,10 @@
-package com.Acknowledgement.service;
+package com.Acknowledgement.Service;
 
 
-import com.Acknowledgement.entity.Acknowledgement;
-import com.Acknowledgement.exceptions.AcknowledgementExistsException;
-import com.Acknowledgement.exceptions.AcknowledgementNotFoundException;
-import com.Acknowledgement.repository.AcknowledgementRepository;
+import com.Acknowledgement.Entity.Acknowledgement;
+import com.Acknowledgement.Exceptions.AcknowledgementExistsException;
+import com.Acknowledgement.Exceptions.AcknowledgementNotFoundException;
+import com.Acknowledgement.Repository.AcknowledgementRepository;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
 import com.spire.doc.documents.TextSelection;
