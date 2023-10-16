@@ -1,8 +1,8 @@
 package com.User.Service;
 
+import com.Exceptions.ApiException;
+import com.Exceptions.ErrorCause;
 import com.User.Entity.User;
-import com.User.Exceptions.UserExistsException;
-import com.User.Exceptions.UserNotFoundException;
 import com.User.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -21,8 +21,7 @@ public class UserService {
   public User createUser(User user) {
     Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
     if (userOptional.isPresent()) {
-      throw new UserExistsException(
-          "User with email:" + userOptional.get().getEmail() + " is already present");
+      throw new ApiException(String.format("User with email %s already exists", user.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
     }
     return userRepository.save(user);
   }
@@ -30,7 +29,7 @@ public class UserService {
   public User getUserById(Long id) {
     Optional<User> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
-        () -> new UserNotFoundException("User with id: " + id + " was not found"));
+        () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     return userOptional.get();
   }
 
@@ -42,13 +41,13 @@ public class UserService {
   public void deleteUserById(Long id) {
     Optional<User> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
-        () -> new UserNotFoundException("User with id: " + id + " was not found"));
+        () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
   }
 
   @Transactional
   public User editUserById(Long id, String email, String name) {
     Optional<User> userOptional = userRepository.findById(id);
-    userOptional.orElseThrow(() -> new UserNotFoundException("User with id: " + id + " was not found"));
+    userOptional.orElseThrow(() -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     if(email != null && !Objects.equals(userOptional.get().getEmail(), email)) {
       userOptional.get().setEmail(email);
     }
