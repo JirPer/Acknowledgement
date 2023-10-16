@@ -1,9 +1,11 @@
 package com.Acknowledgement.Entity;
 
+import com.User.Entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import java.time.Instant;
 import java.util.UUID;
@@ -28,6 +30,8 @@ public class Acknowledgement {
   private Long payout;
   private String date;
   private Instant createdOn;
+  @ManyToOne
+  private User user;
 
   @PrePersist
   public void init() {
