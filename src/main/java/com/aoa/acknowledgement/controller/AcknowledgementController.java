@@ -1,7 +1,7 @@
-package com.Acknowledgement.controller;
+package com.aoa.acknowledgement.controller;
 
-import com.Acknowledgement.entity.Acknowledgement;
-import com.Acknowledgement.service.AcknowledgementService;
+import com.aoa.acknowledgement.entity.Acknowledgement;
+import com.aoa.acknowledgement.service.AcknowledgementService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

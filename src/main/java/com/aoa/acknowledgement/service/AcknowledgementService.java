@@ -1,10 +1,10 @@
-package com.Acknowledgement.service;
+package com.aoa.acknowledgement.service;
 
 
-import com.Acknowledgement.entity.Acknowledgement;
-import com.Acknowledgement.repository.AcknowledgementRepository;
-import com.Exceptions.ApiException;
-import com.Exceptions.ErrorCause;
+import com.aoa.acknowledgement.entity.Acknowledgement;
+import com.aoa.acknowledgement.repository.AcknowledgementRepository;
+import com.aoa.exceptions.ApiException;
+import com.aoa.exceptions.ErrorCause;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
 import com.spire.doc.documents.TextSelection;

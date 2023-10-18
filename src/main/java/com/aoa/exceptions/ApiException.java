@@ -1,4 +1,4 @@
-package com.Exceptions;
+package com.aoa.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
