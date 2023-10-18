@@ -1,6 +1,6 @@
-package com.Acknowledgement.entity;
+package com.aoa.acknowledgement.entity;
 
-import com.User.entity.UserDetail;
+import com.aoa.user.entity.UserDetail;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

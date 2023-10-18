@@ -1,9 +1,9 @@
-package com.User.service;
+package com.aoa.user.service;
 
-import com.Exceptions.ApiException;
-import com.Exceptions.ErrorCause;
-import com.User.entity.UserDetail;
-import com.User.repository.UserRepository;
+import com.aoa.exceptions.ApiException;
+import com.aoa.exceptions.ErrorCause;
+import com.aoa.user.entity.UserDetail;
+import com.aoa.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;

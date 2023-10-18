@@ -1,6 +1,6 @@
-package com.Acknowledgement.repository;
+package com.aoa.acknowledgement.repository;
 
-import com.Acknowledgement.entity.Acknowledgement;
+import com.aoa.acknowledgement.entity.Acknowledgement;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

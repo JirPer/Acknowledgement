@@ -1,7 +1,7 @@
-package com.User.controller;
+package com.aoa.user.controller;
 
-import com.User.entity.UserDetail;
-import com.User.service.UserService;
+import com.aoa.user.entity.UserDetail;
+import com.aoa.user.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
