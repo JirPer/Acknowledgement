@@ -1,9 +1,9 @@
-package com.User.Service;
+package com.User.service;
 
 import com.Exceptions.ApiException;
 import com.Exceptions.ErrorCause;
-import com.User.Entity.User;
-import com.User.Repository.UserRepository;
+import com.User.entity.UserDetail;
+import com.User.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -18,35 +18,35 @@ public class UserService {
   private UserRepository userRepository;
 
   @Transactional
-  public User createUser(User user) {
-    Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
+  public UserDetail createUser(UserDetail userDetail) {
+    Optional<UserDetail> userOptional = userRepository.findByEmail(userDetail.getEmail());
     if (userOptional.isPresent()) {
-      throw new ApiException(String.format("User with email %s already exists", user.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
+      throw new ApiException(String.format("User with email %s already exists", userDetail.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
     }
-    return userRepository.save(user);
+    return userRepository.save(userDetail);
   }
 
-  public User getUserById(Long id) {
-    Optional<User> userOptional = userRepository.findById(id);
+  public UserDetail getUserById(Long id) {
+    Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
         () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     return userOptional.get();
   }
 
-  public List<User> getAllUsers() {
+  public List<UserDetail> getAllUsers() {
     return userRepository.findAll();
   }
 
   @Transactional
   public void deleteUserById(Long id) {
-    Optional<User> userOptional = userRepository.findById(id);
+    Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
         () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
   }
 
   @Transactional
-  public User editUserById(Long id, String email, String name) {
-    Optional<User> userOptional = userRepository.findById(id);
+  public UserDetail editUserById(Long id, String email, String name) {
+    Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(() -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     if(email != null && !Objects.equals(userOptional.get().getEmail(), email)) {
       userOptional.get().setEmail(email);

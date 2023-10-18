@@ -1,12 +1,11 @@
-package com.Acknowledgement.Controller;
+package com.Acknowledgement.controller;
 
-import com.Acknowledgement.Entity.Acknowledgement;
-import com.Acknowledgement.Service.AcknowledgementService;
+import com.Acknowledgement.entity.Acknowledgement;
+import com.Acknowledgement.service.AcknowledgementService;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/acknowledgement")
-@AllArgsConstructor
 public class AcknowledgementController {
 
+  @Autowired
   private AcknowledgementService acknowledgementService;
 
   @PostMapping

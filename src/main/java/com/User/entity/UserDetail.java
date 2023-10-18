@@ -1,6 +1,6 @@
-package com.User.Entity;
+package com.User.entity;
 
-import com.Acknowledgement.Entity.Acknowledgement;
+import com.Acknowledgement.entity.Acknowledgement;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class UserDetail {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class User {
   @Pattern(regexp = "^(.+)@(\\S+)$")
   private String email;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Acknowledgement> acknowledgement;
 
 }

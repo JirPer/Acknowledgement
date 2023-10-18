@@ -1,8 +1,8 @@
-package com.Acknowledgement.Service;
+package com.Acknowledgement.service;
 
 
-import com.Acknowledgement.Entity.Acknowledgement;
-import com.Acknowledgement.Repository.AcknowledgementRepository;
+import com.Acknowledgement.entity.Acknowledgement;
+import com.Acknowledgement.repository.AcknowledgementRepository;
 import com.Exceptions.ApiException;
 import com.Exceptions.ErrorCause;
 import com.spire.doc.Document;
