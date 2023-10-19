@@ -3,8 +3,9 @@ package com.aoa.acknowledgement.service;
 
 import com.aoa.acknowledgement.entity.Acknowledgement;
 import com.aoa.acknowledgement.repository.AcknowledgementRepository;
-import com.aoa.exceptions.ApiException;
-import com.aoa.exceptions.ErrorCause;
+import com.aoa.exception.ApiException400;
+import com.aoa.exception.ApiException404;
+import com.aoa.exception.ErrorCause;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
 import com.spire.doc.documents.TextSelection;
@@ -30,7 +31,7 @@ public class AcknowledgementService {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findByUuid(
         acknowledgement.getUuid());
     if (acknowledgementOptional.isPresent()) {
-      throw new ApiException(
+      throw new ApiException400(
       String.format("Acknowledgement with id %s is already present.", acknowledgement.getId()),
           ErrorCause.ENTITY_ALREADY_EXISTS);
     }
@@ -40,7 +41,7 @@ public class AcknowledgementService {
   @Transactional
   public Acknowledgement customizeUserAcknowledgement(Long id, Map<String, String> parameters) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
-    acknowledgementOptional.orElseThrow(() -> new ApiException
+    acknowledgementOptional.orElseThrow(() -> new ApiException404
         (String.format("Acknowledgement with id %s already was not found", id), ErrorCause.ENTITY_NOT_FOUND));
 
     Date date = new Date();
@@ -70,7 +71,7 @@ public class AcknowledgementService {
 
   public Acknowledgement getAcknowledgementById(Long id) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
-    acknowledgementOptional.orElseThrow(() -> new ApiException
+    acknowledgementOptional.orElseThrow(() -> new ApiException404
         (String.format("Acknowledgement with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
 
     return acknowledgementOptional.get();
@@ -79,7 +80,7 @@ public class AcknowledgementService {
   @Transactional
   public void deleteAcknowledgementById(Long id) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
-    acknowledgementOptional.orElseThrow(() -> new ApiException(String.format("Acknowledgement with id %s was not found", id),ErrorCause.ENTITY_NOT_FOUND));
+    acknowledgementOptional.orElseThrow(() -> new ApiException404(String.format("Acknowledgement with id %s was not found", id),ErrorCause.ENTITY_NOT_FOUND));
     acknowledgementRepository.delete(acknowledgementOptional.get());
   }
 }

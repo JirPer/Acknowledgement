@@ -1,7 +1,8 @@
 package com.aoa.user.service;
 
-import com.aoa.exceptions.ApiException;
-import com.aoa.exceptions.ErrorCause;
+import com.aoa.exception.ApiException400;
+import com.aoa.exception.ApiException404;
+import com.aoa.exception.ErrorCause;
 import com.aoa.user.entity.UserDetail;
 import com.aoa.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +22,7 @@ public class UserService {
   public UserDetail createUser(UserDetail userDetail) {
     Optional<UserDetail> userOptional = userRepository.findByEmail(userDetail.getEmail());
     if (userOptional.isPresent()) {
-      throw new ApiException(String.format("User with email %s already exists", userDetail.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
+      throw new ApiException400(String.format("User with email %s already exists", userDetail.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
     }
     return userRepository.save(userDetail);
   }
@@ -29,7 +30,7 @@ public class UserService {
   public UserDetail getUserById(Long id) {
     Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
-        () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
+        () -> new ApiException404(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     return userOptional.get();
   }
 
@@ -41,13 +42,13 @@ public class UserService {
   public void deleteUserById(Long id) {
     Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
-        () -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
+        () -> new ApiException404(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
   }
 
   @Transactional
   public UserDetail editUserById(Long id, String email, String name) {
     Optional<UserDetail> userOptional = userRepository.findById(id);
-    userOptional.orElseThrow(() -> new ApiException(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
+    userOptional.orElseThrow(() -> new ApiException404(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
     if(email != null && !Objects.equals(userOptional.get().getEmail(), email)) {
       userOptional.get().setEmail(email);
     }
