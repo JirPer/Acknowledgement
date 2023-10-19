@@ -1,4 +1,4 @@
-package com.aoa.exceptions;
+package com.aoa.exception;
 
 public enum ErrorCause {
 
