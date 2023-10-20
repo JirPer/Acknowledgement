@@ -6,6 +6,7 @@ import com.aoa.acknowledgement.repository.AcknowledgementRepository;
 import com.aoa.exception.ApiException400;
 import com.aoa.exception.ApiException404;
 import com.aoa.exception.ErrorCause;
+import com.aoa.user.entity.UserDetail;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
 import com.spire.doc.documents.TextSelection;
@@ -24,18 +25,26 @@ public class AcknowledgementService {
 
   @Autowired
   private AcknowledgementRepository acknowledgementRepository;
-  private final String sourcePath = "C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig2.docx";
 
+  private final String sourcePath = "C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig.docx";
   @Transactional
-  public Acknowledgement createAcknowledgement(Acknowledgement acknowledgement) {
+  public Acknowledgement createAcknowledgement(Acknowledgement acknowledgement, Long id) {
+    Optional<UserDetail> userDetailOptional = acknowledgementRepository.findUserById(id);
+    if(userDetailOptional.isEmpty()) {
+      throw new ApiException404(String.format("user with id %s was not found",id),ErrorCause.ENTITY_NOT_FOUND);
+    }
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findByUuid(
-        acknowledgement.getUuid());
+          acknowledgement.getUuid());
     if (acknowledgementOptional.isPresent()) {
       throw new ApiException400(
-      String.format("Acknowledgement with id %s is already present.", acknowledgement.getId()),
+          String.format("Acknowledgement with id %s is already present.",
+              acknowledgement.getId()),
           ErrorCause.ENTITY_ALREADY_EXISTS);
     }
-    return acknowledgementRepository.save(acknowledgement);
+      acknowledgement.setUser(userDetailOptional.get());
+      acknowledgementRepository.save(acknowledgement);
+
+    return acknowledgement;
   }
 
   @Transactional
@@ -78,9 +87,11 @@ public class AcknowledgementService {
   }
 
   @Transactional
-  public void deleteAcknowledgementById(Long id) {
+  public Acknowledgement deleteAcknowledgementById(Long id) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
     acknowledgementOptional.orElseThrow(() -> new ApiException404(String.format("Acknowledgement with id %s was not found", id),ErrorCause.ENTITY_NOT_FOUND));
     acknowledgementRepository.delete(acknowledgementOptional.get());
+
+    return acknowledgementOptional.get();
   }
 }

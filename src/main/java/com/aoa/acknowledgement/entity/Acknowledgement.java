@@ -1,6 +1,7 @@
 package com.aoa.acknowledgement.entity;
 
 import com.aoa.user.entity.UserDetail;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,7 +39,9 @@ public class Acknowledgement {
   private UUID uuid = UUID.randomUUID();
   private Long payout;
   private String date;
-
+  private String sourcePath;
+  private String savePath;
+  @JsonIgnore
   @ManyToOne
   private UserDetail user;
   private Instant createdOn;

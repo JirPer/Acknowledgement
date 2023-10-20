@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/acknowledgement")
+@RequestMapping("/user")
 public class AcknowledgementController {
 
   @Autowired
   private AcknowledgementService acknowledgementService;
 
-  @PostMapping
-  public ResponseEntity<Acknowledgement> createNewAcknowledgement(@RequestBody Acknowledgement acknowledgement) {
-    return ResponseEntity.ok(acknowledgementService.createAcknowledgement(acknowledgement));
+  @PostMapping("/{uid}/acknowledgements")
+  public ResponseEntity<Acknowledgement> createNewAcknowledgement(@RequestBody Acknowledgement acknowledgement, @PathVariable Long uid) {
+    return ResponseEntity.ok(acknowledgementService.createAcknowledgement(acknowledgement, uid));
   }
 
   @PutMapping("/{id}")
@@ -45,7 +45,7 @@ public class AcknowledgementController {
   }
 
   @DeleteMapping("/{id}")
-  public void deleteAcknowledgementById(@PathVariable Long id) {
-    acknowledgementService.deleteAcknowledgementById(id);
+  public ResponseEntity<Acknowledgement> deleteAcknowledgementById(@PathVariable Long id) {
+    return ResponseEntity.ok(acknowledgementService.deleteAcknowledgementById(id));
   }
 }
