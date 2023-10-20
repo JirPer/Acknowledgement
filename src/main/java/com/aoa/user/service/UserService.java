@@ -39,10 +39,12 @@ public class UserService {
   }
 
   @Transactional
-  public void deleteUserById(Long id) {
+  public UserDetail deleteUserById(Long id) {
     Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
         () -> new ApiException404(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
+
+    return userOptional.get();
   }
 
   @Transactional
