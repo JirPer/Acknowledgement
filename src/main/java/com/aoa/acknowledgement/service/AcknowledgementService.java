@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,10 @@ public class AcknowledgementService {
 
   @Autowired
   private AcknowledgementRepository acknowledgementRepository;
+  @Autowired
+  private Acknowledgement acknowledgement;
 
-  private final String sourcePath = "C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig.docx";
+  private static final Logger logger = LogManager.getLogger(AcknowledgementService.class);
   @Transactional
   public Acknowledgement createAcknowledgement(Acknowledgement acknowledgement, Long id) {
     Optional<UserDetail> userDetailOptional = acknowledgementRepository.findUserById(id);
@@ -43,6 +47,7 @@ public class AcknowledgementService {
     }
       acknowledgement.setUser(userDetailOptional.get());
       acknowledgementRepository.save(acknowledgement);
+      logger.info("acknowledgement successfully saved");
 
     return acknowledgement;
   }
@@ -57,7 +62,7 @@ public class AcknowledgementService {
     DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     String actDate = dateFormat.format(date);
 
-    final Document document = new Document(sourcePath);
+    final Document document = new Document(acknowledgement.getSourcePath());
 
     parameters.forEach((name, value) -> {
       TextSelection nameSelection = document.findString("${" + name + "}", false, true);
@@ -67,7 +72,7 @@ public class AcknowledgementService {
       document.replace("${" + name + "}", value, true, true);
     });
 
-    document.saveToFile("C:/Users/jirip/IdeaProjects/Acknowledgement/oliveOrig.pdf",
+    document.saveToFile(acknowledgement.getSavePath(),
         FileFormat.PDF);
     document.dispose();
 

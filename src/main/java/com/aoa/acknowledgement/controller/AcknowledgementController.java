@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/acknowledgements")
 public class AcknowledgementController {
 
   @Autowired
   private AcknowledgementService acknowledgementService;
 
-  @PostMapping("/{uid}/acknowledgements")
+  @PostMapping("/{uid}")
   public ResponseEntity<Acknowledgement> createNewAcknowledgement(@RequestBody Acknowledgement acknowledgement, @PathVariable Long uid) {
     return ResponseEntity.ok(acknowledgementService.createAcknowledgement(acknowledgement, uid));
   }
