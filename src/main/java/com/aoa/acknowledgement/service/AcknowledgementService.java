@@ -1,6 +1,7 @@
 package com.aoa.acknowledgement.service;
 
 
+import com.aoa.acknowledgement.dto.AcknowledgementDTO;
 import com.aoa.acknowledgement.entity.Acknowledgement;
 import com.aoa.acknowledgement.repository.AcknowledgementRepository;
 import com.aoa.exception.ApiException400;
@@ -17,8 +18,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +32,16 @@ public class AcknowledgementService {
   private AcknowledgementRepository acknowledgementRepository;
   @Autowired
   private Acknowledgement acknowledgement;
+  @Autowired
+  private ModelMapper modelMapper;
 
   private static final Logger logger = LogManager.getLogger(AcknowledgementService.class);
   @Transactional
-  public Acknowledgement createAcknowledgement(Acknowledgement acknowledgement, Long id) {
+  public AcknowledgementDTO createAcknowledgement(Acknowledgement acknowledgement, Long id) {
     Optional<UserDetail> userDetailOptional = acknowledgementRepository.findUserById(id);
     if(userDetailOptional.isEmpty()) {
-      throw new ApiException404(String.format("user with id %s was not found",id),ErrorCause.ENTITY_NOT_FOUND);
+      throw new ApiException404(String.format("user with id %s was not found",id),
+          ErrorCause.ENTITY_NOT_FOUND);
     }
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findByUuid(
           acknowledgement.getUuid());
@@ -49,11 +55,11 @@ public class AcknowledgementService {
       acknowledgementRepository.save(acknowledgement);
       logger.info("acknowledgement successfully saved");
 
-    return acknowledgement;
+    return modelMapper.map(acknowledgement, AcknowledgementDTO.class);
   }
 
   @Transactional
-  public Acknowledgement customizeUserAcknowledgement(Long id, Map<String, String> parameters) {
+  public AcknowledgementDTO customizeUserAcknowledgement(Long id, Map<String, String> parameters) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
     acknowledgementOptional.orElseThrow(() -> new ApiException404
         (String.format("Acknowledgement with id %s already was not found", id), ErrorCause.ENTITY_NOT_FOUND));
@@ -76,19 +82,21 @@ public class AcknowledgementService {
         FileFormat.PDF);
     document.dispose();
 
-    return acknowledgementOptional.get();
+    return modelMapper.map(acknowledgementOptional.get(), AcknowledgementDTO.class);
   }
 
-  public List<Acknowledgement> getAllAcknowledgements() {
-    return acknowledgementRepository.findAll();
+  public List<AcknowledgementDTO> getAllAcknowledgements() {
+    return acknowledgementRepository.findAll().stream()
+        .map(acknowledgement -> modelMapper.map(acknowledgement, AcknowledgementDTO.class))
+        .collect(Collectors.toList());
   }
 
-  public Acknowledgement getAcknowledgementById(Long id) {
+  public AcknowledgementDTO getAcknowledgementById(Long id) {
     Optional<Acknowledgement> acknowledgementOptional = acknowledgementRepository.findById(id);
     acknowledgementOptional.orElseThrow(() -> new ApiException404
         (String.format("Acknowledgement with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
 
-    return acknowledgementOptional.get();
+    return modelMapper.map(acknowledgementOptional.get(), AcknowledgementDTO.class);
   }
 
   @Transactional

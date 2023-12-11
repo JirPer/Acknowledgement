@@ -3,12 +3,15 @@ package com.aoa.user.service;
 import com.aoa.exception.ApiException400;
 import com.aoa.exception.ApiException404;
 import com.aoa.exception.ErrorCause;
+import com.aoa.user.dto.UserDetailDTO;
 import com.aoa.user.entity.UserDetail;
 import com.aoa.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,25 +20,30 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private ModelMapper modelMapper;
 
   @Transactional
-  public UserDetail createUser(UserDetail userDetail) {
+  public UserDetailDTO createUser(UserDetail userDetail) {
     Optional<UserDetail> userOptional = userRepository.findByEmail(userDetail.getEmail());
     if (userOptional.isPresent()) {
       throw new ApiException400(String.format("User with email %s already exists", userDetail.getEmail()), ErrorCause.ENTITY_ALREADY_EXISTS);
     }
-    return userRepository.save(userDetail);
+    userRepository.save(userDetail);
+    return modelMapper.map(userDetail, UserDetailDTO.class);
   }
 
-  public UserDetail getUserById(Long id) {
+  public UserDetailDTO getUserById(Long id) {
     Optional<UserDetail> userOptional = userRepository.findById(id);
     userOptional.orElseThrow(
         () -> new ApiException404(String.format("User with id %s was not found", id), ErrorCause.ENTITY_NOT_FOUND));
-    return userOptional.get();
+    return modelMapper.map(userOptional.get(), UserDetailDTO.class);
   }
 
-  public List<UserDetail> getAllUsers() {
-    return userRepository.findAll();
+  public List<UserDetailDTO> getAllUsers() {
+    return userRepository.findAll().stream()
+        .map(users -> modelMapper.map(users, UserDetailDTO.class))
+        .collect(Collectors.toList());
   }
 
   @Transactional
@@ -57,7 +65,7 @@ public class UserService {
     if(name != null && !Objects.equals(userOptional.get().getName(), name)) {
       userOptional.get().setName(name);
     }
-    return userOptional.get();
+    return userRepository.save(userOptional.get());
   }
 
 }

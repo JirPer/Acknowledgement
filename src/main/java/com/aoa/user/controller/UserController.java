@@ -1,9 +1,12 @@
 package com.aoa.user.controller;
 
+import com.aoa.user.dto.UserDetailDTO;
 import com.aoa.user.entity.UserDetail;
 import com.aoa.user.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +24,17 @@ public class UserController {
   @Autowired
   private UserService userService;
   @GetMapping("/{id}")
-  public ResponseEntity<UserDetail> getUserById(@PathVariable Long id) {
+  public ResponseEntity<UserDetailDTO> getUserById(@PathVariable Long id) {
     return ResponseEntity.ok(userService.getUserById(id));
   }
 
   @PostMapping
-  public ResponseEntity<UserDetail> createUser(@RequestBody UserDetail userDetail) {
-    return ResponseEntity.ok(userService.createUser(userDetail));
+  public ResponseEntity<UserDetailDTO> createUser(@RequestBody @Valid UserDetail userDetail) {
+    return new ResponseEntity<>(userService.createUser(userDetail), HttpStatus.CREATED);
   }
 
   @GetMapping
-  public ResponseEntity<List<UserDetail>> getAllUsers() {
+  public ResponseEntity<List<UserDetailDTO>> getAllUsers() {
     return ResponseEntity.ok(userService.getAllUsers());
   }
   @DeleteMapping("/{id}")

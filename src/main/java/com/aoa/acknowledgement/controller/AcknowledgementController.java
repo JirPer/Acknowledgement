@@ -1,7 +1,9 @@
 package com.aoa.acknowledgement.controller;
 
+import com.aoa.acknowledgement.dto.AcknowledgementDTO;
 import com.aoa.acknowledgement.entity.Acknowledgement;
 import com.aoa.acknowledgement.service.AcknowledgementService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +26,23 @@ public class AcknowledgementController {
   private AcknowledgementService acknowledgementService;
 
   @PostMapping("/{uid}")
-  public ResponseEntity<Acknowledgement> createNewAcknowledgement(@RequestBody Acknowledgement acknowledgement, @PathVariable Long uid) {
+  public ResponseEntity<AcknowledgementDTO> createNewAcknowledgement(@RequestBody @Valid Acknowledgement acknowledgement, @PathVariable Long uid) {
     return ResponseEntity.ok(acknowledgementService.createAcknowledgement(acknowledgement, uid));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Acknowledgement> customizeAcknowledgement(@PathVariable Long id,
+  public ResponseEntity<AcknowledgementDTO> customizeAcknowledgement(@PathVariable Long id,
                                                                   @RequestParam Map<String, String> parameters) {
    return ResponseEntity.ok(acknowledgementService.customizeUserAcknowledgement(id,parameters));
   }
 
   @GetMapping
-  public ResponseEntity<List<Acknowledgement>> getAllAcknowledgement() {
+  public ResponseEntity<List<AcknowledgementDTO>> getAllAcknowledgement() {
     return ResponseEntity.ok(acknowledgementService.getAllAcknowledgements());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Acknowledgement> getAcknowledgementById(@PathVariable Long id) {
+  public ResponseEntity<AcknowledgementDTO> getAcknowledgementById(@PathVariable Long id) {
     return ResponseEntity.ok(acknowledgementService.getAcknowledgementById(id));
   }
 
