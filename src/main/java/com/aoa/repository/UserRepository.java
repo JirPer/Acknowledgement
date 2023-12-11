@@ -1,6 +1,6 @@
-package com.aoa.user.repository;
+package com.aoa.repository;
 
-import com.aoa.user.entity.UserDetail;
+import com.aoa.entity.UserDetail;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,13 +1,13 @@
-package com.aoa.acknowledgement.service;
+package com.aoa.service;
 
 
-import com.aoa.acknowledgement.dto.AcknowledgementDTO;
-import com.aoa.acknowledgement.entity.Acknowledgement;
-import com.aoa.acknowledgement.repository.AcknowledgementRepository;
+import com.aoa.dto.AcknowledgementDTO;
+import com.aoa.entity.Acknowledgement;
+import com.aoa.repository.AcknowledgementRepository;
 import com.aoa.exception.ApiException400;
 import com.aoa.exception.ApiException404;
 import com.aoa.exception.ErrorCause;
-import com.aoa.user.entity.UserDetail;
+import com.aoa.entity.UserDetail;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
 import com.spire.doc.documents.TextSelection;

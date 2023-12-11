@@ -1,8 +1,8 @@
-package com.aoa.acknowledgement.controller;
+package com.aoa.controller;
 
-import com.aoa.acknowledgement.dto.AcknowledgementDTO;
-import com.aoa.acknowledgement.entity.Acknowledgement;
-import com.aoa.acknowledgement.service.AcknowledgementService;
+import com.aoa.dto.AcknowledgementDTO;
+import com.aoa.entity.Acknowledgement;
+import com.aoa.service.AcknowledgementService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;

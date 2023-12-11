@@ -1,4 +1,4 @@
-package com.aoa.acknowledgement.dto;
+package com.aoa.dto;
 
 import lombok.Getter;
 import lombok.Setter;

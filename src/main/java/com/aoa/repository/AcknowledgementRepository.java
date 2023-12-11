@@ -1,7 +1,7 @@
-package com.aoa.acknowledgement.repository;
+package com.aoa.repository;
 
-import com.aoa.acknowledgement.entity.Acknowledgement;
-import com.aoa.user.entity.UserDetail;
+import com.aoa.entity.Acknowledgement;
+import com.aoa.entity.UserDetail;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

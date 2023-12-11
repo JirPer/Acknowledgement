@@ -1,11 +1,11 @@
-package com.aoa.user.service;
+package com.aoa.service;
 
 import com.aoa.exception.ApiException400;
 import com.aoa.exception.ApiException404;
 import com.aoa.exception.ErrorCause;
-import com.aoa.user.dto.UserDetailDTO;
-import com.aoa.user.entity.UserDetail;
-import com.aoa.user.repository.UserRepository;
+import com.aoa.dto.UserDetailDTO;
+import com.aoa.entity.UserDetail;
+import com.aoa.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;

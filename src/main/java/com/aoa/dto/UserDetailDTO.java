@@ -1,4 +1,4 @@
-package com.aoa.user.dto;
+package com.aoa.dto;
 
 import lombok.Getter;
 import lombok.Setter;

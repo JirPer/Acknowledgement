@@ -1,8 +1,8 @@
-package com.aoa.user.controller;
+package com.aoa.controller;
 
-import com.aoa.user.dto.UserDetailDTO;
-import com.aoa.user.entity.UserDetail;
-import com.aoa.user.service.UserService;
+import com.aoa.dto.UserDetailDTO;
+import com.aoa.entity.UserDetail;
+import com.aoa.service.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
